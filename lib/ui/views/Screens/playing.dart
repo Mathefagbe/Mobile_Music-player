@@ -3,7 +3,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:music_player/core/models/songsmodel.dart';
 import 'package:music_player/core/viewsmodel/buttons.dart';
 import 'package:music_player/ui/fonts/fonts.dart';
-import 'package:music_player/ui/views/Screens/playingsongs.dart';
+import 'package:music_player/ui/views/Screens/listofplayingsongs.dart';
 import 'package:music_player/ui/views/widgets/nullartwork.dart';
 import 'package:music_player/ui/views/widgets/playbotton.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -34,21 +34,26 @@ class _PlayingScreenState extends State<PlayingScreen> {
 
     return Column(
       children: [
-        _topbar(context),
-        _image(context),
+        _TopBar(),
+        _MusicImage(value: widget.value),
         SizedBox(
           height: height * 0.041,
         ),
-        _slider(context),
+        _MusicSlider(),
         SizedBox(
           height: height * 0.068,
         ),
-        _isplaying(context),
+        _IsPlaying(),
       ],
     );
   }
+}
 
-  Widget _topbar(BuildContext context) {
+class _TopBar extends StatelessWidget {
+  _TopBar({Key? key}) : super(key: key);
+  final AppFonts _appFonts = AppFonts();
+  @override
+  Widget build(BuildContext context) {
     var textfont = _appFonts.textfont(context);
     var height = _appFonts.height(context);
     var width = _appFonts.width(context);
@@ -85,8 +90,14 @@ class _PlayingScreenState extends State<PlayingScreen> {
       ),
     );
   }
+}
 
-  Widget _image(BuildContext context) {
+class _MusicImage extends StatelessWidget {
+  _MusicImage({required this.value});
+  final List<SongsModel> value;
+  final AppFonts _appFonts = AppFonts();
+  @override
+  Widget build(BuildContext context) {
     var player = Provider.of<Buttons>(context).player;
     var textfont = _appFonts.textfont(context);
     var height = _appFonts.height(context);
@@ -114,7 +125,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                           width: width * 0.75,
                           child: QueryArtworkWidget(
                             artworkBorder: BorderRadius.circular(20),
-                            id: widget.value[index].id,
+                            id: value[index].id,
                             type: ArtworkType.AUDIO,
                             nullArtworkWidget: Artworks(
                               height: height * 0.341,
@@ -128,7 +139,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                         height: height * 0.014,
                       ),
                       Text(
-                        widget.value[index].title,
+                        value[index].title,
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         style: Theme.of(context)
@@ -137,7 +148,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                             ?.copyWith(fontSize: textfont * 0.031),
                       ),
                       Text(
-                        widget.value[index].subtitle,
+                        value[index].subtitle,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -149,8 +160,13 @@ class _PlayingScreenState extends State<PlayingScreen> {
           });
         });
   }
+}
 
-  Widget _slider(BuildContext context) {
+class _MusicSlider extends StatelessWidget {
+  _MusicSlider({Key? key}) : super(key: key);
+  final AppFonts _appFonts = AppFonts();
+  @override
+  Widget build(BuildContext context) {
     var player = Provider.of<Buttons>(context).player;
     var textfont = _appFonts.textfont(context);
     return StreamBuilder<Duration>(
@@ -215,8 +231,13 @@ class _PlayingScreenState extends State<PlayingScreen> {
       },
     );
   }
+}
 
-  Widget _isplaying(BuildContext context) {
+class _IsPlaying extends StatelessWidget {
+  _IsPlaying({Key? key}) : super(key: key);
+  final AppFonts _appFonts = AppFonts();
+  @override
+  Widget build(BuildContext context) {
     var player = Provider.of<Buttons>(context).player;
     var height = _appFonts.height(context);
     return SizedBox(
@@ -226,7 +247,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _loops(context),
+          const _Loops(),
           IconButton(
               onPressed: () {
                 Provider.of<Buttons>(context, listen: false).skiptoPrevious();
@@ -263,13 +284,18 @@ class _PlayingScreenState extends State<PlayingScreen> {
                 Icons.skip_next,
                 size: 40,
               )),
-          _queuelist()
+          const _QueueListMusic()
         ],
       ),
     );
   }
+}
 
-  Widget _loops(BuildContext context) {
+class _Loops extends StatelessWidget {
+  const _Loops({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     var player = Provider.of<Buttons>(context).player;
     return StreamProvider<LoopMode>.value(
       value: player.loopModeStream,
@@ -294,8 +320,13 @@ class _PlayingScreenState extends State<PlayingScreen> {
       },
     );
   }
+}
 
-  Widget _queuelist() {
+class _QueueListMusic extends StatelessWidget {
+  const _QueueListMusic({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return IconButton(
         onPressed: () {
           showModalBottomSheet(
@@ -304,7 +335,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
               enableDrag: false,
               context: context,
               builder: (context) {
-                return PlayingSongs();
+                return ListOfPlayingSongs();
               });
         },
         icon: const Icon(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static Color darkgrey = const Color.fromRGBO(18, 18, 18, 1);
-  static Color darkgreyblck = const Color.fromRGBO(169, 169, 169, 0.9);
+  static Color darkgreyblck = const Color.fromARGB(168, 66, 63, 63);
   static Color darkgerytab = const Color.fromRGBO(18, 18, 18, 1);
   static Color grey = const Color.fromRGBO(253, 255, 245, 0.9);
   static Color greywhite = const Color.fromRGBO(253, 255, 245, 1);

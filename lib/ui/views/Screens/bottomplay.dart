@@ -34,19 +34,27 @@ class BottomPlay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _artimage(context),
+                _ArtImages(),
                 Stack(
                   alignment: Alignment.center,
-                  children: [
-                    _isloading(context),
-                    _isplay(context),
+                  children: const [
+                    _IsLoading(),
+                    _IsPlaying(),
                   ],
                 )
               ],
             ));
   }
+}
 
-  Widget _artimage(BuildContext context) {
+
+
+class _ArtImages extends StatelessWidget {
+  _ArtImages({Key? key}) : super(key: key);
+  final AppFonts _appFonts = AppFonts();
+
+  @override
+  Widget build(BuildContext context) {
     var textfont = _appFonts.textfont(context);
     var height = _appFonts.height(context);
     var width = _appFonts.width(context);
@@ -110,8 +118,16 @@ class BottomPlay extends StatelessWidget {
                 );
         });
   }
+}
 
-  Widget _isloading(BuildContext context) {
+
+
+
+class _IsLoading extends StatelessWidget {
+  const _IsLoading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     var player = Provider.of<Buttons>(context).player;
     return StreamBuilder<Duration>(
         stream: player.positionStream,
@@ -129,8 +145,15 @@ class BottomPlay extends StatelessWidget {
                 );
         });
   }
+}
 
-  Widget _isplay(BuildContext context) {
+
+
+class _IsPlaying extends StatelessWidget {
+  const _IsPlaying({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     var player = Provider.of<Buttons>(context).player;
     return StreamBuilder<PlayerState>(
         stream: player.playerStateStream,

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
-
 import 'package:music_player/core/viewsmodel/buttons.dart';
 import 'package:music_player/ui/colors/colors.dart';
 import 'package:music_player/ui/fonts/fonts.dart';
 
-class PlayingSongs extends StatelessWidget {
-  PlayingSongs({Key? key}) : super(key: key);
+class ListOfPlayingSongs extends StatelessWidget {
+  ListOfPlayingSongs({Key? key}) : super(key: key);
 
   final AppFonts _appFonts = AppFonts();
 
